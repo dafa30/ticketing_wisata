@@ -28,17 +28,17 @@ $escape = static fn($value) => htmlspecialchars((string) $value, ENT_QUOTES, 'UT
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
     <!-- CSS Navbar -->
     <link rel="stylesheet" href="../assets/css/navbar.css">
+    <link rel="stylesheet" href="../assets/css/animations.css">
     <!-- CSS Invoice -->
     <link rel="stylesheet" href="../assets/css/invoice.css">
     <!-- Icon -->
     <link rel="shortcun icon" href="../assets/img/depan3.png">
-    <title>Invoice</title>
+    <title>E-Ticket &amp; Invoice</title>
 </head>
 <body>
     <!-- Navbar (Navigasi Bar) -->
     <nav class="shadow">
         <a href="#" class="logo">Tiket Wisata</a>
-        <div class="bx bx-menu" id="menu-icon"></div>
         <ul class="navbar">
             <li><a href="../index.html">Home</a></li>
             <li><a href="tempat_wisata.php">Tempat Wisata</a></li>
@@ -113,6 +113,16 @@ $escape = static fn($value) => htmlspecialchars((string) $value, ENT_QUOTES, 'UT
                     <p>: Rp. <?= number_format((int) $pesanan['total_bayar'], 0, ',', '.'); ?></p>
                 </div>
             </div>
+            <div class="row ms-5 me-0">
+                <label class="col-sm-6 col-form-label">Kode Tiket</label>
+                <div class="col-md-6 mt-2">
+                    <p>: <strong><?= $escape($pesanan['kode_tiket']); ?></strong></p>
+                </div>
+            </div>
+            <div class="text-center my-3">
+                <div id="qrcode" class="d-inline-block" data-kode="<?= $escape($pesanan['kode_tiket']); ?>"></div>
+                <p class="small text-muted mt-2">Tunjukkan QR code ini kepada petugas saat masuk.</p>
+            </div>
         </div>
         <div class="invoice-actions">
             <button type="button" class="btn btn-primary" onclick="window.print()">
@@ -125,5 +135,12 @@ $escape = static fn($value) => htmlspecialchars((string) $value, ENT_QUOTES, 'UT
     <br>
     <!-- CDN Javascript Bootstrap  -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+    <script>
+        const qr = document.getElementById("qrcode");
+        if (qr) {
+            new QRCode(qr, { text: qr.dataset.kode, width: 160, height: 160 });
+        }
+    </script>
 </body>
 </html>

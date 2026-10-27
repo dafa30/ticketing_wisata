@@ -1,0 +1,62 @@
+/* Animasi ringan */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@keyframes floatY {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+nav { animation: fadeIn 0.4s ease both; }
+.navbar a { transition: background 0.25s, color 0.25s; position: relative; }
+.navbar a::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: 6px;
+  width: 0;
+  height: 2px;
+  background: #0096d1;
+  transition: width 0.25s, left 0.25s;
+}
+.navbar a:hover::after { width: 60%; left: 20%; }
+
+.container-lg > .card,
+.container-lg > .invoice-card,
+.container-md > h2,
+.container-md .row > div { animation: fadeUp 0.6s ease both; }
+.container-md .row > div:nth-child(2) { animation-delay: 0.1s; }
+.container-md .row > div:nth-child(3) { animation-delay: 0.2s; }
+.invoice-card { animation: fadeUp 0.6s ease both; }
+.invoice-actions { animation: fadeUp 0.6s 0.15s ease both; }
+
+.container-md .card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.container-md .card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 24px rgba(0, 150, 209, 0.25);
+}
+.container-md .card img { transition: transform 0.4s ease; }
+.container-md .card { overflow: hidden; }
+.container-md .card:hover img { transform: scale(1.05); }
+
+.btn { transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s; }
+.btn:hover { transform: translateY(-2px); box-shadow: 0 6px 14px rgba(0, 0, 0, 0.15); }
+.btn:active { transform: translateY(0); box-shadow: none; }
+
+.form-control, .form-select { transition: border-color 0.25s, box-shadow 0.25s; }
+
+.modal.fade .modal-dialog { transition: transform 0.3s ease-out, opacity 0.3s; }
+
+.img-main { animation: fadeUp 0.8s ease both, floatY 4s 0.8s ease-in-out infinite; }
+main section { animation: fadeUp 0.7s ease both; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+}

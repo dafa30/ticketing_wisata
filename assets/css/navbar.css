@@ -88,12 +88,6 @@ nav {
 .user a:hover {
   background: #20cbff;
 }
-#menu-icon {
-  font-size: 24px;
-  cursor: pointer;
-  z-index: 10001;
-  display: none;
-}
 hr {
   margin: 0.5rem 0;
 }
@@ -126,131 +120,38 @@ input .harga_tiket {
     padding: 14px;
   }
 }
-@media only screen and (min-width: 768px) and (max-width: 1279px) {
-  #menu-icon {
-    display: initial;
-    color: var(--text-color);
-  }
+@media only screen and (max-width: 1279px) {
   nav {
     position: fixed;
-    display: flex;
     justify-content: space-between;
-    background: var(--bg-color);
     padding: 10px 5%;
-    transition: 0.1s;
   }
   nav .navbar {
-    position: absolute;
-    top: -500px;
-    left: 0px;
-    right: 0;
-    display: flex;
-    flex-direction: column;
-    background: var(--bg-color);
-    box-shadow: 0 4px 4px rgb(0 0 0 / 25%);
-    transition: 1s ease;
-    text-align: center;
-  }
-  .navbar {
-    padding: 0;
-  }
-  .navbar.active {
-    top: 100%;
-  }
-  ol,
-  ul,
-  li {
-    padding-left: 0px;
-    margin: 0px;
+    position: static;
+    flex-direction: row;
   }
   .navbar a {
-    padding: 15px 400px;
-    display: block;
-    background: var(--bg-color);
-  }
-  .navbar a:hover {
-    background: #20cbff;
+    padding: 14px 12px;
   }
   .navbar li {
-    margin-left: -10px;
-    margin-top: 0px;
+    margin-top: 0;
   }
   .logo {
-    display: block;
-    padding: 0px;
-  }
-  #greenmode {
-    position: absolute;
-    top: 0px;
-    right: 40px;
-  }
-  .shadow {
-    box-shadow: 0 0rem 5px rgba(122, 213, 255, 0.75) !important;
+    padding: 0;
   }
   .user {
     display: none;
-  }
-  .img-area img {
-    width: 100%;
   }
 }
-@media only screen and (max-width: 767px) {
-  .section-padding {
-    padding: 75px 3%;
-  }
-  #menu-icon {
-    display: initial;
-    color: var(--text-color);
+@media only screen and (max-width: 575px) {
+  .logo {
+    display: none;
   }
   nav {
-    position: fixed;
-    display: flex;
-    justify-content: space-between;
-    background: var(--bg-color);
-    padding: 10px 5%;
-    transition: 0.1s;
-  }
-  nav .navbar {
-    position: absolute;
-    top: -500px;
-    left: 0px;
-    right: 0;
-    display: flex;
-    flex-direction: column;
-    background: var(--bg-color);
-    box-shadow: 0 4px 4px rgb(0 0 0 / 25%);
-    transition: 1s ease;
-    text-align: center;
-  }
-  .navbar {
-    padding: 0;
-  }
-  .navbar.active {
-    top: 100%;
-  }
-  ol,
-  ul,
-  li {
-    padding-left: 0px;
-    margin: 0px;
+    justify-content: center;
   }
   .navbar a {
-    padding: 15px 170px;
-    display: block;
-    background: var(--bg-color);
-  }
-  .navbar a:hover {
-    background: #20cbff;
-  }
-  .navbar li {
-    margin-left: -10px;
-    margin-top: 0px;
-  }
-  .logo {
-    display: block;
-    padding: 0px;
-  }
-  .user {
-    display: none;
+    padding: 14px 8px;
+    font-size: 14px;
   }
 }

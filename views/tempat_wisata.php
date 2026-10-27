@@ -11,6 +11,7 @@
     <!-- CDN Boxicons -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
     <link rel="stylesheet" href="../assets/css/navbar.css">
+    <link rel="stylesheet" href="../assets/css/animations.css">
     <!-- Icon -->
     <link rel="shortcut icon" href="../assets/img/depan3.png">
     <title>Tempat Wisata</title>
@@ -19,7 +20,6 @@
     <!-- Navbar (Navigasi Bar) -->
     <nav class="shadow">
         <a href="#" class="logo">Tiket Wisata</a>
-        <div class="bx bx-menu" id="menu-icon"></div>
         <ul class="navbar">
             <li><a href="../index.html">Home</a></li>
             <li><a href="tempat_wisata.php">Tempat Wisata</a></li>

@@ -25,6 +25,7 @@ if (isset($_POST['pesan'])) {
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/boxicons@latest/css/boxicons.min.css">
     <!-- CSS Navbar -->
     <link rel="stylesheet" href="../assets/css/navbar.css">
+    <link rel="stylesheet" href="../assets/css/animations.css">
     <!-- CSS Card -->
     <link rel="stylesheet" href="../assets/css/form_tiket.css">
     <!-- Icon -->
@@ -35,7 +36,6 @@ if (isset($_POST['pesan'])) {
     <!-- Navbar (Navigasi Bar) -->
     <nav class="shadow">
         <a href="#" class="logo">Tiket Wisata</a>
-        <div class="bx bx-menu" id="menu-icon"></div>
         <ul class="navbar">
             <li><a href="../index.html">Home</a></li>
             <li><a href="tempat_wisata.php">Tempat Wisata</a></li>
@@ -79,9 +79,9 @@ if (isset($_POST['pesan'])) {
                     <div class="col-md-6">
                         <select class="form-select" name="tempat_wisata" id="tempat_wisata" onchange="hargaTiket()" required>
                             <option value="" disabled selected>Pilih Jenis Wisata</option>
-                            <option value="Museum">Museum</option>
-                            <option value="Pantai">Pantai</option>
-                            <option value="Taman Nasional">Taman Nasional</option>
+                            <?php foreach (daftar_wisata(true) as $w): ?>
+                                <option value="<?= htmlspecialchars($w['nama'], ENT_QUOTES, 'UTF-8') ?>" data-harga="<?= (int) $w['harga'] ?>"><?= htmlspecialchars($w['nama'], ENT_QUOTES, 'UTF-8') ?></option>
+                            <?php endforeach; ?>
                         </select>
                     </div>
                 </div>
@@ -127,11 +127,6 @@ if (isset($_POST['pesan'])) {
                         </p>
                     </div>
                 </div>
-                <div class="row ms-5 me-0">
-                    <div class="col-md-6 offset-sm-5">
-                        <button type="button" class="btn btn-primary" id="hitungTotal" onclick="hitungTotalBayar()">Hitung Total Bayar</button>
-                    </div>
-                </div>
                 <div class="row ms-5 me-0 mb-2">
                     <label for="total_bayar" class="col-sm-11 col-form-label">
                         <input type="checkbox" name="setuju" required>
@@ -158,18 +153,10 @@ if (isset($_POST['pesan'])) {
     <script>
         // Fungsi untuk mengisi value harga tiket sesuai kelas Wisata yang dipilih
         function hargaTiket() {
-            const kelas = document.getElementById("tempat_wisata").value;
+            const kelas = document.getElementById("tempat_wisata");
             const hargaTiket = document.getElementById("harga_tiket");
-
-            if (kelas == "Museum") {
-                hargaTiket.value = 70000;
-            } else if (kelas == "Pantai") {
-                hargaTiket.value = 110000;
-            } else if (kelas == "Taman Nasional") {
-                hargaTiket.value = 170000;
-            } else {
-                hargaTiket.value = 0;
-            }
+            const opt = kelas.options[kelas.selectedIndex];
+            hargaTiket.value = opt && opt.dataset.harga ? opt.dataset.harga : 0;
             hitungTotalBayar();
         }
 

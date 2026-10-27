@@ -1,5 +1,5 @@
 <?php
-$conn = mysqli_connect("localhost","root","","tiket_wisata");
+require __DIR__ . '/../config/database.php';
 
 // Fungsi query
 function query($query) {
@@ -13,6 +13,11 @@ function query($query) {
     return $rows;
 }
 
+// Daftar tempat wisata dari katalog
+function daftar_wisata($hanyaAktif = false) {
+    return query('SELECT * FROM tb_wisata' . ($hanyaAktif ? ' WHERE aktif = 1' : '') . ' ORDER BY nama');
+}
+
 // Fungsi untuk CREATE
 function pesan($pesan) {
     global $conn;
@@ -23,11 +28,10 @@ function pesan($pesan) {
     $jadwal_keberangkatan = $pesan['jadwal_keberangkatan'] ?? '';
     $pengunjung_dewasa = filter_var($pesan['pengunjung_dewasa'] ?? null, FILTER_VALIDATE_INT);
     $pengunjung_anakanak = filter_var($pesan['pengunjung_anakanak'] ?? null, FILTER_VALIDATE_INT);
-    $harga = [
-        'Museum' => 70000,
-        'Pantai' => 110000,
-        'Taman Nasional' => 170000,
-    ];
+    $harga = [];
+    foreach (daftar_wisata(true) as $w) {
+        $harga[$w['nama']] = (int) $w['harga'];
+    }
 
     if (
         $nama === '' || strlen($nama) > 50 ||
@@ -42,15 +46,16 @@ function pesan($pesan) {
         return false;
     }
 
+    $kode = 'TW-' . date('Ymd') . '-' . strtoupper(bin2hex(random_bytes(4)));
     $harga_tiket = $harga[$tempat_wisata];
     $total_bayar = ($pengunjung_dewasa + $pengunjung_anakanak) * $harga_tiket;
-    $statement = mysqli_prepare($conn, 'INSERT INTO tb_pemesanan_tiket (nama, nomer_identitas, no_hp, tempat_wisata, jadwal_keberangkatan, pengunjung_dewasa, pengunjung_anakanak, harga_tiket, total_bayar) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)');
+    $statement = mysqli_prepare($conn, 'INSERT INTO tb_pemesanan_tiket (kode_tiket, nama, nomer_identitas, no_hp, tempat_wisata, jadwal_keberangkatan, pengunjung_dewasa, pengunjung_anakanak, harga_tiket, total_bayar) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)');
 
     if (!$statement) {
         return false;
     }
 
-    mysqli_stmt_bind_param($statement, 'sssssiiii', $nama, $nomer_identitas, $no_hp, $tempat_wisata, $jadwal_keberangkatan, $pengunjung_dewasa, $pengunjung_anakanak, $harga_tiket, $total_bayar);
+    mysqli_stmt_bind_param($statement, 'ssssssiiii', $kode, $nama, $nomer_identitas, $no_hp, $tempat_wisata, $jadwal_keberangkatan, $pengunjung_dewasa, $pengunjung_anakanak, $harga_tiket, $total_bayar);
     $inserted = mysqli_stmt_execute($statement);
     mysqli_stmt_close($statement);
 

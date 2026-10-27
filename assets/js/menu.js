@@ -1,12 +1,5 @@
-let nav = document.querySelector('nav');
-let menu = document.querySelector('#menu-icon');
-let navbar = document.querySelector('.navbar');
+const nav = document.querySelector('nav');
+const toggleShadow = () => nav.classList.toggle('shadow', window.scrollY > 0);
 
-window.addEventListener('scroll', () => {
-    nav.classList.toggle('shadow', window.scrollY > 0);
-});
-
-menu.onclick = () => {
-    menu.classList.toggle('bx-x');
-    navbar.classList.toggle('active');
-}
+window.addEventListener('scroll', toggleShadow);
+toggleShadow();
